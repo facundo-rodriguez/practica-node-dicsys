@@ -17,6 +17,47 @@ router.get('/', async (req, res) => {
 });
 
 
+//productos por categoria
+
+router.get('/categoria/:id_categoria', async (req, res) => {
+    try {
+        const { id_categoria } = req.params;
+
+        if(validarIdProducto(id_categoria)){
+
+            const [result] = await pool.query('SELECT * FROM productos where fk_categoria=?',[id_categoria]);
+            res.send(result);
+        }
+        else{
+            res.send("error, los datos son erroneos")
+        }
+
+    } catch (error) {
+        console.log('Error al listar productos', error);
+        res.status(404).send('Error al listar productos');
+    }
+});
+
+//un producto
+router.get('/:id_producto', async (req, res) => {
+    try {
+        const { id_producto } = req.params;
+
+        if(validarIdProducto(id_producto)){
+
+            const [result] = await pool.query('SELECT id_producto, nombre_producto, precio, stock, p.fecha_alta as fecha_alta, c.nombre_categoria as categoria FROM productos p inner join categorias c on p.fk_categoria=c.id_categoria  where id_producto=?',[id_producto]);
+            res.send(result);
+        }
+        else{
+            res.send("error, los datos son erroneos")
+        }
+
+    } catch (error) {
+        console.log('Error al listar productos', error);
+        res.status(404).send('Error al listar productos');
+    }
+});
+
 //crear producto
 router.post('/', async function (req, res) {
 
@@ -49,6 +90,7 @@ router.post('/', async function (req, res) {
 
 });
 
+
 //actualizar producto
 router.put('/:id',async function (req, res){
 
@@ -59,11 +101,11 @@ router.put('/:id',async function (req, res){
             
             const body = req.body;   
             const [result]= await pool.query(`UPDATE productos SET nombre_producto=?, precio=?, stock=?, fk_categoria=?
-                                                WHERE id_productos=? and NOT EXISTS
+                                                WHERE id_producto=? and NOT EXISTS
                                                                             ( SELECT * 
-                                                                             FROM productos 
-                                                                             WHERE nombre_producto=? 
-                                                                                and id_productos!=? ) `
+                     FROM (SELECT * FROM productos) AS temp 
+                     WHERE temp.nombre_producto=? 
+                     AND temp.id_producto!=?) `
                                             
                                                 , [body.nombre_producto.trim(), body.precio, body.stock, body.fk_categoria, id, body.nombre_producto.trim(), id]
                                             );
@@ -92,7 +134,7 @@ router.delete('/:id', async function (req, res) {
     
     try{
         const { id } = req.params;
-        const [result]= await pool.query('DELETE FROM productos WHERE id_productos =?', [id]);
+        const [result]= await pool.query('DELETE FROM productos WHERE id_producto =?', [id]);
     
         res.json({
             mensaje: (result.affectedRows==1) ? 'Se elimino el producto con exito' : ' no se elimino el producto',
