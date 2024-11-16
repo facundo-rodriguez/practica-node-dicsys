@@ -45,7 +45,7 @@ router.get('/:id_producto', async (req, res) => {
 
         if(validarIdProducto(id_producto)){
 
-            const [result] = await pool.query('SELECT id_producto, nombre_producto, precio, stock, p.fecha_alta as fecha_alta, c.nombre_categoria as categoria FROM productos p inner join categorias c on p.fk_categoria=c.id_categoria  where id_producto=?',[id_producto]);
+            const [result] = await pool.query('SELECT id_producto, nombre_producto, precio, stock, p.fecha_alta as fecha_alta, c.id_categoria as id_categoria, c.nombre_categoria as categoria FROM productos p inner join categorias c on p.fk_categoria=c.id_categoria  where id_producto=?',[id_producto]);
             res.send(result);
         }
         else{
