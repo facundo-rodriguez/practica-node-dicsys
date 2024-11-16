@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     
     } catch (error) {
         console.log('Error al listar productos', error);
-        res.status(404).send('Error al listar productos');
+        res.status(500).json({ mensaje: "error al listar los productos" });
     }
 });
 
@@ -29,12 +29,12 @@ router.get('/categoria/:id_categoria', async (req, res) => {
             res.send(result);
         }
         else{
-            res.send("error, los datos son erroneos")
+            res.status(400).json({ mensaje: "error, los datos son erroneos" })
         }
 
     } catch (error) {
         console.log('Error al listar productos', error);
-        res.status(404).send('Error al listar productos');
+        res.status(500).json({ mensaje: "error al listar los productos" });
     }
 });
 
@@ -49,12 +49,12 @@ router.get('/:id_producto', async (req, res) => {
             res.send(result);
         }
         else{
-            res.send("error, los datos son erroneos")
+            res.status(400).json({ mensaje: "error, los datos son erroneos" })
         }
 
     } catch (error) {
         console.log('Error al listar productos', error);
-        res.status(404).send('Error al listar productos');
+        res.status(500)..json({ mensaje: "error al listar los productos" });
     }
 });
 
@@ -79,7 +79,7 @@ router.post('/', async function (req, res) {
             })
 
         }else{
-            res.send("error, los datos son erroneos")
+            res.status(400).json({ mensaje: "error, los datos son erroneos" });
         }
 
     }
@@ -117,13 +117,13 @@ router.put('/:id',async function (req, res){
             })
 
         }else{
-            res.send("error, los datos son erroneos")
+            res.status(400).json({ mensaje: "error, los datos son erroneos" })
         }
 
     }
     catch(error){
         console.log('Error al actualizar producto', error);
-        res.status(500).send('Error al actualizar');
+        res.status(500).json({ mensaje: 'Error al actualizar', error: error.message });
     }
 
 })
