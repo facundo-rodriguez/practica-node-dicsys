@@ -54,7 +54,7 @@ router.get('/:id_producto', async (req, res) => {
 
     } catch (error) {
         console.log('Error al listar productos', error);
-        res.status(500)..json({ mensaje: "error al listar los productos" });
+        res.status(500).json({ mensaje: "error al listar los productos" });
     }
 });
 
