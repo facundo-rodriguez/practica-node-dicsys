@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     
     } catch (error) {
         console.log('Error al listar productos', error);
-        res.status(404).send('Error al listar productos');
+        res.status(500).json({ mensaje: "error al listar los productos" });
     }
 });
 
@@ -30,12 +30,12 @@ router.get('/categoria/:id_categoria', async (req, res) => {
             res.send(result);
         }
         else{
-            res.send("error, los datos son erroneos")
+            res.status(400).json({ mensaje: "error, los datos son erroneos" })
         }
 
     } catch (error) {
         console.log('Error al listar productos', error);
-        res.status(404).send('Error al listar productos');
+        res.status(500).json({ mensaje: "error al listar los productos" });
     }
 });
 
@@ -46,16 +46,16 @@ router.get('/:id_producto', async (req, res) => {
 
         if(validarIdProducto(id_producto)){
 
-            const [result] = await pool.query('SELECT id_producto, nombre_producto, precio, stock, p.fecha_alta as fecha_alta, c.nombre_categoria as categoria FROM productos p inner join categorias c on p.fk_categoria=c.id_categoria  where id_producto=?',[id_producto]);
+            const [result] = await pool.query('SELECT id_producto, nombre_producto, precio, stock, p.fecha_alta as fecha_alta, c.id_categoria as id_categoria, c.nombre_categoria as categoria FROM productos p inner join categorias c on p.fk_categoria=c.id_categoria  where id_producto=?',[id_producto]);
             res.send(result);
         }
         else{
-            res.send("error, los datos son erroneos")
+            res.status(400).json({ mensaje: "error, los datos son erroneos" })
         }
 
     } catch (error) {
         console.log('Error al listar productos', error);
-        res.status(404).send('Error al listar productos');
+        res.status(500).json({ mensaje: "error al listar los productos" });
     }
 });
 
@@ -80,7 +80,7 @@ router.post('/', authenticateToken, authorizeRoles(["ADMIN"]), async function (r
             })
 
         }else{
-            res.send("error, los datos son erroneos")
+            res.status(400).json({ mensaje: "error, los datos son erroneos" });
         }
 
     }
@@ -118,13 +118,13 @@ router.put('/:id', authenticateToken, authorizeRoles(["ADMIN"]), async function 
             })
 
         }else{
-            res.send("error, los datos son erroneos")
+            res.status(400).json({ mensaje: "error, los datos son erroneos" })
         }
 
     }
     catch(error){
         console.log('Error al actualizar producto', error);
-        res.status(500).send('Error al actualizar');
+        res.status(500).json({ mensaje: 'Error al actualizar', error: error.message });
     }
 
 })
