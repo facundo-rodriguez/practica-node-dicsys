@@ -1,6 +1,7 @@
 
 import express from 'express';
 import pool from './../../config.js';
+import {authenticateToken, authorizeRoles} from '../../middleware.js'
 
 const router = express.Router();
 
@@ -59,7 +60,7 @@ router.get('/:id_producto', async (req, res) => {
 });
 
 //crear producto
-router.post('/', async function (req, res) {
+router.post('/', authenticateToken, authorizeRoles(["ADMIN"]), async function (req, res) {
 
     try{
         const {body} = req;
@@ -92,7 +93,7 @@ router.post('/', async function (req, res) {
 
 
 //actualizar producto
-router.put('/:id',async function (req, res){
+router.put('/:id', authenticateToken, authorizeRoles(["ADMIN"]), async function (req, res){
 
     try{
         const { id } = req.params;
@@ -101,11 +102,11 @@ router.put('/:id',async function (req, res){
             
             const body = req.body;   
             const [result]= await pool.query(`UPDATE productos SET nombre_producto=?, precio=?, stock=?, fk_categoria=?
-                                                WHERE id_producto=? and NOT EXISTS
+                                                WHERE id_productos=? and NOT EXISTS
                                                                             ( SELECT * 
                      FROM (SELECT * FROM productos) AS temp 
                      WHERE temp.nombre_producto=? 
-                     AND temp.id_producto!=?) `
+                     AND temp.id_productos!=?) `
                                             
                                                 , [body.nombre_producto.trim(), body.precio, body.stock, body.fk_categoria, id, body.nombre_producto.trim(), id]
                                             );
@@ -130,7 +131,7 @@ router.put('/:id',async function (req, res){
 
 
 //eliminar producto
-router.delete('/:id', async function (req, res) {
+router.delete('/:id', authenticateToken, authorizeRoles(["ADMIN"]), async function (req, res) {
     
     try{
         const { id } = req.params;

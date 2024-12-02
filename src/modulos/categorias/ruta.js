@@ -1,5 +1,6 @@
 import express from 'express';
 import pool from './../../config.js';
+import {authenticateToken, authorizeRoles} from '../../middleware.js'
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
 
 
 //crear categoria
-router.post('/', async function (req, res) {
+router.post('/', authenticateToken, authorizeRoles(["ADMIN"]), async function (req, res) {
 
     try{
         const {body} = req;
@@ -49,7 +50,7 @@ router.post('/', async function (req, res) {
 });
 
 //actualizar categoria
-router.put('/:id',async function (req, res){
+router.put('/:id', authenticateToken, authorizeRoles(["ADMIN"]), async function (req, res){
 
     try{
         const { id } = req.params;
@@ -79,7 +80,7 @@ router.put('/:id',async function (req, res){
 
 
 //eliminar categoria
-router.delete('/:id', async function (req, res) {
+router.delete('/:id', authenticateToken, authorizeRoles(["ADMIN"]), async function (req, res) {
     
     try{
         const { id } = req.params;
