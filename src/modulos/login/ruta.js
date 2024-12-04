@@ -11,7 +11,7 @@ router.post('/', isNotAuthenticated, async (req, res) => {
 
         
         const { body } = req;
-        const [result] = await pool.query(`SELECT u.id_usuario as id_usuario, u.username as username, u.password as password, u.estado as estado, r.rol as rol FROM usuarios u inner join roles r on u.fk_role=r.id_rol  WHERE username='${body.username}'` );
+        const [result] = await pool.query(`SELECT u.id_usuario as id_usuario, u.username as username, u.password as password, u.estado as estado, r.rol as rol FROM usuarios u inner join roles r on u.fk_rol=r.id_rol  WHERE username='${body.username}'` );
         
         if(result.length === 0){
             return res.status(401).json({ error: 'Usuario no encontrado' });
