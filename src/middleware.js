@@ -74,6 +74,7 @@ export function authenticateToken(req, res, next){
     
     // Obtener el token de la cabecera 'Authorization' del request.
     const authHeader = req.cookies.access_token;//req.headers['authorization'];
+    console.log(req.cookies)
     
     //Si authHeader tiene un valor, lo divide en un array usando el espacio
     //Si es undefined o null, no intenta hacer nada más y asigna undefined a token.
