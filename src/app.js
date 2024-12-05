@@ -9,12 +9,15 @@ import cookieParser from 'cookie-parser';
 const app = express();
 
 const corsOptions = {
-    origin: 'https://mi-dominio.com',  // Permitir solo este origen
+    origin: 'http://localhost:4200',  // Permitir solo este origen
     methods: ['GET', 'POST', 'PUT', 'DELETE'],          // Permitir solo ciertos métodos HTTP
-    allowedHeaders: ['Content-Type'],  // Permitir ciertos encabezados
+    allowedHeaders: ['Content-Type'], 
+    credentials: true,// Permitir ciertos encabezados
   };
 
-app.use(cors());
+
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
