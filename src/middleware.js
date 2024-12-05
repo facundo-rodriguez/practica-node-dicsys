@@ -78,7 +78,7 @@ export function authenticateToken(req, res, next){
     //Si authHeader tiene un valor, lo divide en un array usando el espacio
     //Si es undefined o null, no intenta hacer nada más y asigna undefined a token.
     const token = authHeader; //&& authHeader.split(' ')[1];
-
+    console.log(req.cookies)
     if(!token){
         return res.status(401).json({ error: 'Acceso denegado. No se proporcionó un token' });
     }
