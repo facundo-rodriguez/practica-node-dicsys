@@ -102,11 +102,11 @@ router.put('/:id', authenticateToken, authorizeRoles(["ADMIN"]), async function 
             
             const body = req.body;   
             const [result]= await pool.query(`UPDATE productos SET nombre_producto=?, precio=?, stock=?, fk_categoria=?
-                                                WHERE id_productos=? and NOT EXISTS
+                                                WHERE id_producto=? and NOT EXISTS
                                                                             ( SELECT * 
                      FROM (SELECT * FROM productos) AS temp 
                      WHERE temp.nombre_producto=? 
-                     AND temp.id_productos!=?) `
+                     AND temp.id_producto!=?) `
                                             
                                                 , [body.nombre_producto.trim(), body.precio, body.stock, body.fk_categoria, id, body.nombre_producto.trim(), id]
                                             );
