@@ -11,7 +11,7 @@ const app = express();
 const corsOptions = {
     origin: 'http://localhost:4200',  // Permitir solo este origen
     methods: ['GET', 'POST', 'PUT', 'DELETE'],          // Permitir solo ciertos métodos HTTP
-    allowedHeaders: ['Content-Type'], 
+    //allowedHeaders: ['Content-Type'], 
     credentials: true,// Permitir ciertos encabezados
   };
 
