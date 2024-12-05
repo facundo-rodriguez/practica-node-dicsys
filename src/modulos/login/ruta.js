@@ -25,7 +25,7 @@ router.post('/', isNotAuthenticated, async (req, res) => {
         .cookie('access_token', token,{
             httpOnly: true, //la cookie solo se puede acceder en el servidor
             sameSite: 'None', //la cookie solo se puede acceder en el mismo dominio
-           // secure: true,
+            secure: false,
             maxAge: 1000*60*60, // la cookie tiene un tiempo de validez de 1h
 
         })
