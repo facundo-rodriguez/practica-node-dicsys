@@ -22,7 +22,12 @@ router.post('/', isNotAuthenticated, async (req, res) => {
         const token= await createToken(body, user);
 
         res
-        .cookie('access_token', token)
+        .cookie('access_token', token,
+                {   
+                    httpOnly:true,
+                    secure:false,
+                    samSite:"false",
+                })
         .json({ message: 'Login exitoso', token: token });
         // res.send(result);
     
