@@ -19,7 +19,8 @@ router.post('/', isNotAuthenticated, async (req, res) => {
       
         const user = result[0];
 
-        const token= await createToken(body, user);
+        //corregir porque me parece que al token lo estoy creadno con todos los datos del usuario, es decir, incluyendo el password
+        const token= await createToken(body, user); 
 
         res
         .cookie('access_token', token, {   
@@ -28,7 +29,7 @@ router.post('/', isNotAuthenticated, async (req, res) => {
             secure: false,
             maxAge: 1000*60*60, // la cookie tiene un tiempo de validez de 1h
                 })
-        .json({ message: 'Login exitoso', token: token });
+        .json({ message: 'Login exitoso', token: token, username: user.username, rol: user.rol });
         // res.send(result);
     
     }catch(error){
