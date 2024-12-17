@@ -45,7 +45,11 @@ router.post('/logout',(req, res,next)=>{
     try{
 
         res
-        .clearCookie('access_token')
+        .clearCookie('access_token',{
+            httpOnly: true, //la cookie solo se puede acceder en el servidor
+            secure: true,
+            sameSite: 'none'
+        })
         .json({message: 'Logout exitoso'});
      
 
