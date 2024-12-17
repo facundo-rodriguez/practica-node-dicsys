@@ -5,18 +5,6 @@ import jwt from 'jsonwebtoken';
 
 const SECRET_KEY = 'tu_clave_secreta';
 
-//formacionydesarrollo@dicsys.com
-//carlos.velazquez@dicsys.com
-//https://www.djamware.com/post/631719a902bb4f02ac0dab1d/ionic-angular-tutorial-multilanguage-app-using-angular-i18n#google_vignette
-
-/*
-Tarea: 
-Enviar hasta el lunes 2/12/2024 un componente realizado en 
-Angular / Ionic que integre .ts .css .html
-
-Enviar hasta el lunes 2/12/2024 una funcion realizada en PHP en la que 
-se evalue retornando verdadero o falso si un string es capicua.
-*/
 
 export async function createToken(body, user){
     
