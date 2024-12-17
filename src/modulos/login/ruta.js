@@ -27,7 +27,7 @@ router.post('/', isNotAuthenticated, async (req, res) => {
             httpOnly: true, //la cookie solo se puede acceder en el servidor
             sameSite: 'none', //la cookie solo se puede acceder en el mismo dominio, Necesario para que funcione entre dominios diferentes
             secure: true,
-            //domain: 'practica-angular-dicsys.netlify.app',
+            domain: 'practica-node-dicsys.onrender.com',
             maxAge: 1000*60*60, // la cookie tiene un tiempo de validez de 1h
                 })
         .json({ message: 'Login exitoso', token: token, username: user.username, rol: user.rol });
