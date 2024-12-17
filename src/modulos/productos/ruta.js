@@ -26,7 +26,7 @@ router.get('/categoria/:id_categoria', async (req, res) => {
 
         if(validarIdProducto(id_categoria)){
 
-            const [result] = await pool.query('SELECT * FROM productos where fk_categoria=?',[id_categoria]);
+            const [result] = await pool.query('SELECT p.id_producto as id_producto, p.nombre_producto as nombre_producto, p.precio as precio, p.stock as stock, p.fecha_alta as fecha_alta, p.fk_categoria as fk_categoria, c.nombre_categoria as nombre_categoria FROM productos p inner join categorias c on c.id_categoria=p.fk_categoria where p.fk_categoria=?',[id_categoria]);
             res.send(result);
         }
         else{
