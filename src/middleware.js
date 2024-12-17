@@ -49,12 +49,13 @@ export function isNotAuthenticated(req, res, next){
     //Si es undefined o null, no intenta hacer nada más y asigna undefined a token.
     const token= authHeader; //&& authHeader.split(' ')[1];
 
-    // console.log("token: "+token);
+    console.log("token: "+token);
     // console.log("authheader: ",authHeader)
 
     if(token){
         jwt.verify(token, SECRET_KEY, (err, user)=>{
-            
+
+            console.log("token dentro del jwt.verify: "+token);
             if(err){
                 return res.status(403).json({ error: 'Token no válido o expirado' });
             
