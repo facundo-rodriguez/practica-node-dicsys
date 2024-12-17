@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser';
 const app = express();
 
 const corsOptions = {
-    origin: 'https://practica-angular-dicsys.netlify.app/', //'http://localhost:4200',  // Permitir solo este origen
+    origin: 'https://practica-angular-dicsys.netlify.app', //'http://localhost:4200',  // Permitir solo este origen
     methods: ['GET', 'POST', 'PUT', 'DELETE'],          // Permitir solo ciertos métodos HTTP
     allowedHeaders: ['Content-Type', "Authorization"], 
     credentials: true,// Permitir ciertos encabezados
